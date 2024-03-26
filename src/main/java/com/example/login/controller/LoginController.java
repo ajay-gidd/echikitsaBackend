@@ -17,9 +17,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api")
-@CrossOrigin
 @RequiredArgsConstructor
 
 public class LoginController {
@@ -59,6 +60,14 @@ public class LoginController {
                     .body(authResponseDto);
         }
 
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<String> getSecret(){
+        System.out.println("Hello");
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(UUID.randomUUID().toString());
     }
 
 

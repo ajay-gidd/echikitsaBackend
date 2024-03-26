@@ -2,6 +2,8 @@ package com.example.login.model;
 
 import jakarta.persistence.*;
 
+import java.util.Optional;
+
 @Entity
 @Table(name = "doctors")
 @PrimaryKeyJoinColumn(name = "user_id")
@@ -20,9 +22,6 @@ public class Doctor extends User {
     @ManyToOne
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
-
-
-
 
     public String getRegistrationNumber() {
         return registrationNumber;
@@ -78,5 +77,13 @@ public class Doctor extends User {
 
     public void setYeraOfExp(int yeraOfExp) {
         this.yeraOfExp = yeraOfExp;
+    }
+
+    public Hospital getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(Hospital hospital) {
+        this.hospital = hospital;
     }
 }

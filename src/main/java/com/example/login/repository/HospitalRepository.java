@@ -10,5 +10,8 @@ public interface HospitalRepository extends JpaRepository<Hospital,Long> {
     @Query("SELECT h FROM Hospital h WHERE h.email = :email ")
     Hospital findByEmail(String email);
 
+    @Query("SELECT h FROM Hospital h WHERE h.hospital_id = :id ")
+    Hospital getHospitalById(Long id);
+
 
 }
