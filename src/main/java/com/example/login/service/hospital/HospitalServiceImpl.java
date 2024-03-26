@@ -1,4 +1,4 @@
-package com.example.login.service;
+package com.example.login.service.hospital;
 
 import com.example.login.model.Hospital;
 
@@ -11,8 +11,6 @@ public class HospitalServiceImpl implements HospitalService{
 
     @Autowired
     private HospitalRepository hospitalRepository;
-
-
 
     @Override
     public String registerHospital(Hospital hospital) {

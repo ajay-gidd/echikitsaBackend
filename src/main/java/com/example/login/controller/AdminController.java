@@ -4,17 +4,13 @@ import com.example.login.dto.AuthResponseDto;
 import com.example.login.dto.AuthStatus;
 import com.example.login.model.Doctor;
 import com.example.login.model.Hospital;
-import com.example.login.model.User;
 import com.example.login.repository.HospitalRepository;
-import com.example.login.service.AuthService;
 import com.example.login.service.admin.adminService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -33,9 +29,17 @@ public class AdminController {
         doctor.setHospital(hospital);
 
         try {
-            adminService.addDoctor(doctor);
-            var authResponseDto = new AuthResponseDto("jwtToken", AuthStatus.USER_CREATED_SUCCESSFULLY);
+            boolean status = adminService.addDoctor(doctor);
+            var authResponseDto = new AuthResponseDto("", AuthStatus.USER_NOT_CREATED);;
+            if(status)
+            {
+                authResponseDto = new AuthResponseDto("Doctor Added Successfully", AuthStatus.USER_CREATED_SUCCESSFULLY);
 
+            }
+            else {
+                authResponseDto = new AuthResponseDto("Doctor Already Exists", AuthStatus.USER_NOT_CREATED);
+
+            }
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(authResponseDto);

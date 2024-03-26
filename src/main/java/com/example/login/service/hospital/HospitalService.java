@@ -1,4 +1,4 @@
-package com.example.login.service;
+package com.example.login.service.hospital;
 
 import com.example.login.model.Hospital;
 

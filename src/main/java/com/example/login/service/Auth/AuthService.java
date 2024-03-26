@@ -1,4 +1,4 @@
-package com.example.login.service;
+package com.example.login.service.Auth;
 
 import com.example.login.model.User;
 import org.springframework.stereotype.Service;

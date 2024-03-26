@@ -1,8 +1,7 @@
 package com.example.login.controller;
 
 import com.example.login.model.Hospital;
-import com.example.login.model.User;
-import com.example.login.service.HospitalService;
+import com.example.login.service.hospital.HospitalService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;

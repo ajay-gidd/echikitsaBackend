@@ -1,27 +1,42 @@
 package com.example.login.controller;
 
-import com.example.login.dto.loginCred;
+import com.example.login.dto.AuthResponseDto;
+import com.example.login.dto.AuthStatus;
 import com.example.login.model.User;
-import com.example.login.service.SignupService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.login.service.Auth.AuthService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
+@RequiredArgsConstructor
 public class SignupController {
 
-    @Autowired
-    private SignupService signService;
+    private final AuthService authService;
 
-    @PostMapping("/patient/signup")
-    public String registerUser(@RequestBody User user) {
-        String rawPassword = user.getPassword();
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String hashedPassword = encoder.encode(rawPassword);
-        user.setPassword(hashedPassword);
 
-        return signService.registerUser(user);
+
+    @PostMapping("/signUp")
+    public ResponseEntity<AuthResponseDto> signUp(@RequestBody User user) {
+        try {
+            var jwtToken = authService.signUp(user);
+
+            var authResponseDto = new AuthResponseDto(jwtToken, AuthStatus.USER_CREATED_SUCCESSFULLY);
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(authResponseDto);
+        } catch (Exception e) {
+            var authResponseDto = new AuthResponseDto("User Already Exists", AuthStatus.USER_NOT_CREATED);
+
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(authResponseDto);
+        }
+
     }
+
 }
